@@ -93,6 +93,7 @@ i  { color: inherit; }
 html { min-height: 100%; display: flex; flex-direction: column; }
 
 #qa { margin-top: 15px; padding-bottom: 2rem; }
+#qa { display:flex;flex-direction:column;margin:0px;padding:0px;min-height:100vh; }
 
 /* Formatting For Timer */
 .timer {
@@ -105,11 +106,13 @@ margin: 12em auto auto auto;
 text-align: center;
 font-size: 1rem;
 height: 100%;
-margin: 0px 15px;
+margin: 0px;
+padding: 0px;
 flex-grow: 1;
-padding-bottom: 1em;
 }
-.mobile .card { padding-bottom: 5em; }
+.mobile .card { }
+#content { display:block;flex:1 0 auto;padding:1em; }
+.mobile #content { padding:0; }
 
 /* Details For IMAGES */
 .mobile .card img {max-width: 100%!important; }
@@ -189,11 +192,9 @@ text-decoration: underline;
 /* TAGS */
 /* Container To Fix Tags At Bottom Of Screen */
 #tags-container{
-position: fixed;
-bottom: .5px;
-width: 100%;
 line-height: .45rem;
-margin-left: -15px;
+margin: 0px;
+flex:0 0 auto;
 }
 
 /* Clickable Tags (need to download the add-on) */
@@ -417,3 +418,6 @@ kbd:nth-of-type(10n+0) { border-color: #607D8B; color: #607D8B!important; }
 
 
 .mobile .button-ln,  .mobile .button-mq,  .mobile .button-pat,  .mobile .button-bb,  .mobile .button-fa,  .mobile .button-sketchy,  .mobile .button-pixorize,  .mobile .button-physeo,  .mobile .button-ar { font-size: 18px; padding: 9px 7px; }
+
+.card{padding:0;margin:0}
+.mobile .card{padding:0;margin:0}

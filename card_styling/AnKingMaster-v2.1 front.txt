@@ -1,3 +1,5 @@
+<div id="content"><!-- START #content -->
+
 {{edit:cloze:Text}}
 
 
@@ -53,6 +55,7 @@ replace the arrows/dashes from the statement below with double brackets-->
     //DONT FADE BETWEEN CARDS
 	qFade=0; if (typeof anki !== 'undefined') anki.qFade=qFade;
 </script>
+</div><!-- END #content -->
 
 {{#Tags}}
     <div id="tags-container">{{clickable::Tags}}</div>

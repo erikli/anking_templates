@@ -1,3 +1,4 @@
+<div id="content"><!-- START #content -->
 <script>
     // ##############  HINT REVEAL SHORTCUTS  ##############
     // Visit https://keycode.info/ to get the number/letter for the key you want to assign. 
@@ -210,48 +211,6 @@ For instructions on how to show a field automatically,  visit www.ankingmed.com/
     var tagID
 </script>
 
-{{#Tags}}
-    <div id="tags-container">{{clickable::Tags}}</div>
-    <script>
-        var tagContainer = document.getElementById("tags-container")
-        if (tagContainer.childElementCount == 0) {
-         var tagList= tagContainer.innerHTML.split(" ");
-         var kbdList = [];
-         var newTagContent = document.createElement("div");
-        
-         for (var i = 0; i < tagList.length;  i++) {
-          var newTag = document.createElement("kbd");
-          newTag.innerHTML = tagList[i];
-          newTagContent.append(newTag)
-         }
-         tagContainer.innerHTML = newTagContent.innerHTML;
-         tagContainer.style.cursor = "default";
-        }
-        if (tagContainer.innerHTML.indexOf(tagID) != -1) {
-        tagContainer.style.backgroundColor = "rgba(251,11,11,.15)";
-        }
-        
-        function showtags() {
-          var xx = document.getElementById("tags-container");
-        
-            if (xx.style.display 
-        === "none") {
-            xx.style.display = "block";
-          } else {
-            xx.style.display = 
-          "none";
-          }
-        } 
-        document.addEventListener('keyup', function(e) {
-            if(e.key =="c"){
-             showtags();
-            }
-        });
-        
-        
-    </script>
-{{/Tags}}
-
 <div id="pic"><a href="https://www.ankingmed.com">
         <img src="_AnKingRound.png" alt="The AnKing" style="height:50px;border:0;position:fixed;bottom:10px;right:10px;">
     </a></div>
@@ -445,3 +404,46 @@ For instructions on how to show a field automatically,  visit www.ankingmed.com/
         var mustClickW = true;
         //END CUSTOMIZATION
 </script>
+</div><!-- END #content -->
+
+{{#Tags}}
+    <div id="tags-container">{{clickable::Tags}}</div>
+    <script>
+        var tagContainer = document.getElementById("tags-container")
+        if (tagContainer.childElementCount == 0) {
+         var tagList= tagContainer.innerHTML.split(" ");
+         var kbdList = [];
+         var newTagContent = document.createElement("div");
+
+         for (var i = 0; i < tagList.length;  i++) {
+          var newTag = document.createElement("kbd");
+          newTag.innerHTML = tagList[i];
+          newTagContent.append(newTag)
+         }
+         tagContainer.innerHTML = newTagContent.innerHTML;
+         tagContainer.style.cursor = "default";
+        }
+        if (tagContainer.innerHTML.indexOf(tagID) != -1) {
+        tagContainer.style.backgroundColor = "rgba(251,11,11,.15)";
+        }
+
+        function showtags() {
+          var xx = document.getElementById("tags-container");
+
+            if (xx.style.display
+        === "none") {
+            xx.style.display = "block";
+          } else {
+            xx.style.display =
+          "none";
+          }
+        }
+        document.addEventListener('keyup', function(e) {
+            if(e.key =="c"){
+             showtags();
+            }
+        });
+
+
+    </script>
+{{/Tags}}
