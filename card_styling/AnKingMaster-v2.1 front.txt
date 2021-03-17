@@ -60,24 +60,53 @@ replace the arrows/dashes from the statement below with double brackets-->
 {{#Tags}}
     <div id="tags-container">{{clickable::Tags}}</div>
     <script>
-        var tagContainer = document.getElementById("tags-container")
-        if (tagContainer.childElementCount == 0) {
-         var tagList= tagContainer.innerHTML.split(" ");
-         var kbdList = [];
-         var newTagContent = document.createElement("div");
-        
-         for (var i = 0; i < tagList.length;  i++) {
-          var newTag = document.createElement("kbd");
-          newTag.innerHTML = tagList[i];
-          newTagContent.append(newTag)
-         }
-         tagContainer.innerHTML = newTagContent.innerHTML;
-         tagContainer.style.cursor = "default";
-        }
-        if (tagContainer.innerHTML.indexOf("Missed") != -1) {
-        tagContainer.style.backgroundColor = "rgba(251,11,11,.2)";
-        } else {
-        tagContainer.style.display = "none";
-        }
+        (function(){//anonymous function to avoid polluting global namespace
+          var tagContainer = document.getElementById("tags-container");
+          if(tagContainer && tagContainer.childElementCount == 0) {
+            var tags = tagContainer.innerHTML.split(" ");
+            var tag_tree = Array();
+            var tag_tracker = Object();
+            // tree is [{'name':'tagName','sub':[]}] where `sub` contains subtrees
+            // tracker is ['tagName':treeObj]
+
+            var SEPARATOR = "::";// TODO: configurable SEPARATOR
+            for( t of tags ){
+              components = t.split(SEPARATOR);
+              for(const [idx, c] of components.entries() ){
+                partial_tag = components.slice(0, idx + 1).join(SEPARATOR);
+                if(!tag_tracker.hasOwnProperty(partial_tag)){
+                  treeObj = {'name':partial_tag,'sub':Array()}
+                  tag_tracker[partial_tag] = treeObj
+                  if(idx == 0){
+                    tag_tree.push(treeObj)
+                  }
+                  else{
+                    parent_tag = components.slice(0,idx).join(SEPARATOR);
+                    parent = tag_tracker[parent_tag];
+                    parent['sub'].push(treeObj)
+                  }
+                }
+              }
+            }
+
+            function _kbd_tag_recursive(tag_tree){
+              return tag_tree.reduce(function(tag_tree_html, tagObj){
+                var tag = tagObj['name'];
+                //uses SEPARATOR bound to outside closure
+                var short_tag = tagObj['name'].split(SEPARATOR);
+                short_tag = short_tag[short_tag.length-1];
+
+                return `${tag_tree_html}<kbd data-ankitag="${tag}">${short_tag}${_kbd_tag_recursive(tagObj['sub'])}</kbd>`
+              },"");
+            }
+
+            tagContainer.innerHTML = _kbd_tag_recursive(tag_tree)
+          }
+          if (tagContainer.innerHTML.indexOf("Missed") != -1) {
+            tagContainer.style.backgroundColor = "rgba(251,11,11,.2)";
+          } else {
+            tagContainer.style.display = "none";
+          }
+        })();
     </script>
 {{/Tags}}
